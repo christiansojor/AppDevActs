@@ -1,5 +1,7 @@
 import React from 'react';
 import { View, Text, FlatList, TouchableOpacity, StatusBar } from 'react-native';
+import { useDispatch } from 'react-redux';
+import { logout } from '../app/action';
 
 const products = [
   { id: '1', name: 'Sneakers', price: '$89.99', emoji: '👟' },
@@ -9,14 +11,28 @@ const products = [
   { id: '5', name: 'Watch', price: '$199.99', emoji: '⌚' },
 ];
 
-const HomeScreen = ({ navigation }) => {
+const HomeScreen = () => {
+  const dispatch = useDispatch();
+
+  const handleLogout = () => {
+    dispatch(logout());
+  };
+
   return (
     <View className="flex-1 bg-gray-50">
       <StatusBar barStyle="dark-content" />
 
-      <View className="bg-white px-6 pt-14 pb-5 shadow-sm">
-        <Text className="text-2xl font-bold text-gray-800">Hello, Shopper 👋</Text>
-        <Text className="text-sm text-gray-400 mt-1">Find something you love</Text>
+      <View className="bg-white px-6 pt-14 pb-5 shadow-sm flex-row items-center justify-between">
+        <View>
+          <Text className="text-2xl font-bold text-gray-800">Hello, Shopper 👋</Text>
+          <Text className="text-sm text-gray-400 mt-1">Find something you love</Text>
+        </View>
+        <TouchableOpacity
+          onPress={handleLogout}
+          className="bg-purple-400 px-4 py-2 rounded-xl"
+        >
+          <Text className="text-white font-bold text-sm">Logout</Text>
+        </TouchableOpacity>
       </View>
 
       <FlatList
