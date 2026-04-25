@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, TextInput, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, TextInput, Text, TouchableOpacity } from 'react-native';
 
 const CustomTextInput = ({
   label,
@@ -13,11 +13,13 @@ const CustomTextInput = ({
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
 
   return (
-    <View style={styles.container}>
-      {label && <Text style={styles.label}>{label}</Text>}
-      <View style={[styles.inputWrapper, errorMessage ? styles.errorBorder : null]}>
+    <View className="mb-4 w-full">
+      {label && (
+        <Text className="text-sm font-semibold text-gray-700 mb-1">{label}</Text>
+      )}
+      <View className={`flex-row items-center border rounded-xl px-3 bg-gray-50 ${errorMessage ? 'border-red-400' : 'border-gray-200'}`}>
         <TextInput
-          style={styles.input}
+          className="flex-1 py-3 text-sm text-gray-800"
           placeholder={placeholder}
           placeholderTextColor="#aaa"
           value={value}
@@ -28,54 +30,17 @@ const CustomTextInput = ({
         />
         {secureTextEntry && (
           <TouchableOpacity onPress={() => setIsPasswordVisible(!isPasswordVisible)}>
-            <Text style={styles.toggle}>{isPasswordVisible ? 'Hide' : 'Show'}</Text>
+            <Text className="text-purple-400 font-semibold text-sm">
+              {isPasswordVisible ? 'Hide' : 'Show'}
+            </Text>
           </TouchableOpacity>
         )}
       </View>
-      {errorMessage && <Text style={styles.errorText}>{errorMessage}</Text>}
+      {errorMessage && (
+        <Text className="text-red-400 text-xs mt-1">{errorMessage}</Text>
+      )}
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    marginBottom: 16,
-    width: '100%',
-  },
-  label: {
-    fontSize: 14,
-    fontWeight: '600',
-    marginBottom: 6,
-    color: '#333',
-  },
-  inputWrapper: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    borderWidth: 1,
-    borderColor: '#ddd',
-    borderRadius: 10,
-    paddingHorizontal: 12,
-    backgroundColor: '#f9f9f9',
-  },
-  input: {
-    flex: 1,
-    paddingVertical: 12,
-    fontSize: 15,
-    color: '#333',
-  },
-  toggle: {
-    color: '#E91E63',
-    fontWeight: '600',
-    fontSize: 13,
-  },
-  errorBorder: {
-    borderColor: '#e74c3c',
-  },
-  errorText: {
-    color: '#e74c3c',
-    fontSize: 12,
-    marginTop: 4,
-  },
-});
 
 export default CustomTextInput;
